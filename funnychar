@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 2019.12.31 funnychar ver 0.2
+# 2020.2.16 funnychar ver 0.4
 # kanata
 
 IFS='
@@ -18,7 +18,7 @@ changecode(){
   funnytable[" "]=" "
   CP="$1"
 
-  if [ "$CP" = "FF21" ]
+  if [ "$CP" = "FF21" ] # Pattern 1
   then
     for WORD in `echo {A..Z}|tr -d " "|grep -o .`
     do
@@ -31,7 +31,7 @@ changecode(){
       funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
       CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
     done
-  elif [ "$CP" = "1F110" ]
+  elif [ "$CP" = "1F110" ] # Pattern 15
   then
     for WORD in `echo {A..Z}|tr -d " "|grep -o .`
     do
@@ -44,7 +44,7 @@ changecode(){
       funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
       CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
     done
-  elif echo "$CP"|grep -e "1F130" -e "1F150" -e "1F170" -e "1F1E6" >/dev/null
+  elif echo "$CP"|grep -e "1F130" -e "1F150" -e "1F170" -e "1F1E6" >/dev/null # Patten 17,18,19
   then
     for WORD in `echo {A..Z}|tr -d " "|grep -o .`
     do
@@ -55,6 +55,30 @@ changecode(){
     for WORD in `echo {A..Z} {a..z}|tr -d " "|grep -o .`
     do
       funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      if [ "$CP" = "1D455" ];then funnytable["$WORD"]=$(printf "&#x210E;"|nkf --numchar-input);fi # Pattern 3 [h]
+      if [ "$CP" = "1D49D" ];then funnytable["$WORD"]=$(printf "&#x212C;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A0" ];then funnytable["$WORD"]=$(printf "&#x2130;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A1" ];then funnytable["$WORD"]=$(printf "&#x2131;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A3" ];then funnytable["$WORD"]=$(printf "&#x210B;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A4" ];then funnytable["$WORD"]=$(printf "&#x2110;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A7" ];then funnytable["$WORD"]=$(printf "&#x2112;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4A8" ];then funnytable["$WORD"]=$(printf "&#x2133;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4AD" ];then funnytable["$WORD"]=$(printf "&#x211B;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4BA" ];then funnytable["$WORD"]=$(printf "&#x212F;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4BC" ];then funnytable["$WORD"]=$(printf "&#x210A;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D4C4" ];then funnytable["$WORD"]=$(printf "&#x2134;"|nkf --numchar-input);fi # Pattern 5
+      if [ "$CP" = "1D506" ];then funnytable["$WORD"]=$(printf "&#x212D;"|nkf --numchar-input);fi # Pattern 7
+      if [ "$CP" = "1D50B" ];then funnytable["$WORD"]=$(printf "&#x210C;"|nkf --numchar-input);fi # Pattern 7
+      if [ "$CP" = "1D50C" ];then funnytable["$WORD"]=$(printf "&#x2111;"|nkf --numchar-input);fi # Pattern 7
+      if [ "$CP" = "1D515" ];then funnytable["$WORD"]=$(printf "&#x211C;"|nkf --numchar-input);fi # Pattern 7
+      if [ "$CP" = "1D51D" ];then funnytable["$WORD"]=$(printf "&#x2128;"|nkf --numchar-input);fi # Pattern 7
+      if [ "$CP" = "1D53A" ];then funnytable["$WORD"]=$(printf "&#x2102;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D53F" ];then funnytable["$WORD"]=$(printf "&#x210D;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D545" ];then funnytable["$WORD"]=$(printf "&#x2115;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D547" ];then funnytable["$WORD"]=$(printf "&#x2119;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D548" ];then funnytable["$WORD"]=$(printf "&#x211A;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D549" ];then funnytable["$WORD"]=$(printf "&#x211D;"|nkf --numchar-input);fi # Pattern 8
+      if [ "$CP" = "1D551" ];then funnytable["$WORD"]=$(printf "&#x2124;"|nkf --numchar-input);fi # Pattern 8
       CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
     done
   fi
@@ -98,10 +122,10 @@ then
     "2") CP="1D400";; #𝐀𝐁𝐂𝐚𝐛𝐜
     "3") CP="1D434";; #𝐴𝐵𝐶𝑎𝑏𝑐
     "4") CP="1D468";; #𝑨𝑩𝑪𝒂𝒃𝒄
-    "5") CP="1D49C";; #𝒜𝒝𝒞𝒶𝒷𝒸
+    "5") CP="1D49C";; #𝒜ℬ𝒞𝒶𝒷𝒸
     "6") CP="1D4D0";; #𝓐𝓑𝓒𝓪𝓫𝓬
-    "7") CP="1D504";; #𝔄𝔅𝔆𝔞𝔟𝔠
-    "8") CP="1D538";; #𝔸𝔹𝔺𝕒𝕓𝕔
+    "7") CP="1D504";; #𝔄𝔅ℭ𝔞𝔟𝔠
+    "8") CP="1D538";; #𝔸𝔹ℂ𝕒𝕓𝕔
     "9") CP="1D56C";; #𝕬𝕭𝕮𝖆𝖇𝖈
     "10") CP="1D5A0";; #𝖠𝖡𝖢𝖺𝖻𝖼
     "11") CP="1D5D4";; #𝗔𝗕𝗖𝗮𝗯𝗰
@@ -119,7 +143,10 @@ then
   if [ -p /dev/stdin ] ; then
     changecode "$CP" "$(cat -)"
   else
-    changecode "$CP" "$3$4$5$6$7$8$9"
+    #changecode "$CP" "$3$4$5$6$7$8$9"
+    GLOBIGNORE=*
+    changecode "$CP"  "$3$4$5$6$7$8$9"
+    unset GLOBIGNORE
   fi
   exit 0
 else
