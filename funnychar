@@ -1,0 +1,129 @@
+#!/bin/bash
+
+# 2019.12.31 funnychar ver 0.2
+# kanata
+
+IFS='
+'
+
+help(){
+  echo 'ex) echo abcABC|'$0' -u U+1D468'
+  echo 'ex) '$0' -p [pattern_number] abcABC'
+  echo "    pattern_number is .."
+  cat $0 |grep "^    \"[1-9]"|tr -d '"=;'|sed 's/CP/U+/g'
+}
+
+changecode(){
+  declare -A funnytable
+  funnytable[" "]=" "
+  CP="$1"
+
+  if [ "$CP" = "FF21" ]
+  then
+    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+    CP="FF41"
+    for WORD in `echo {a..z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+  elif [ "$CP" = "1F110" ]
+  then
+    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+    CP="249C"
+    for WORD in `echo {a..z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+  elif echo "$CP"|grep -e "1F130" -e "1F150" -e "1F170" -e "1F1E6" >/dev/null
+  then
+    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+  else
+    for WORD in `echo {A..Z} {a..z}|tr -d " "|grep -o .`
+    do
+      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
+      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
+    done
+  fi
+
+  for WORD in `echo "$2"|grep -o .`
+  do
+    if [ -z "${funnytable[$WORD]}" ]
+    then
+     echo -n $WORD
+    else
+      echo -n ${funnytable["$WORD"]}
+    fi
+  done
+  echo
+}
+
+if echo "$@" |grep -e '^-h' -e '^--help' >/dev/null
+then
+  help
+  exit 0
+fi
+
+if [ "$#" -lt 2 ]
+then
+  help
+  exit 0
+fi
+
+if echo "$1" |grep '^-u' >/dev/null
+then
+  if [ -p /dev/stdin ] ; then
+    changecode $(echo $2|tr -d 'U+') "$(cat -)"
+  else
+    changecode $(echo $2|tr -d 'U+') "$3$4$5$6$7$8$9"
+  fi
+  exit 0
+elif echo "$1" |grep '^-p' >/dev/null
+then
+  case "$2" in
+    "1") CP="FF21";;  #ＡＢＣａｂｃ
+    "2") CP="1D400";; #𝐀𝐁𝐂𝐚𝐛𝐜
+    "3") CP="1D434";; #𝐴𝐵𝐶𝑎𝑏𝑐
+    "4") CP="1D468";; #𝑨𝑩𝑪𝒂𝒃𝒄
+    "5") CP="1D49C";; #𝒜𝒝𝒞𝒶𝒷𝒸
+    "6") CP="1D4D0";; #𝓐𝓑𝓒𝓪𝓫𝓬
+    "7") CP="1D504";; #𝔄𝔅𝔆𝔞𝔟𝔠
+    "8") CP="1D538";; #𝔸𝔹𝔺𝕒𝕓𝕔
+    "9") CP="1D56C";; #𝕬𝕭𝕮𝖆𝖇𝖈
+    "10") CP="1D5A0";; #𝖠𝖡𝖢𝖺𝖻𝖼
+    "11") CP="1D5D4";; #𝗔𝗕𝗖𝗮𝗯𝗰
+    "12") CP="1D608";; #𝘈𝘉𝘊𝘢𝘣𝘤
+    "13") CP="1D63C";; #𝘼𝘽𝘾𝙖𝙗𝙘
+    "14") CP="1D670";; #𝙰𝙱𝙲𝚊𝚋𝚌
+    "15") CP="1F110";; #🄐🄑🄒
+    "16") CP="24B6";;  #ⒶⒷⒸⓐⓑⓒ
+    "17") CP="1F130";; #🄰🄱🄲
+    "18") CP="1F150";; #🅐🅑🅒
+    "19") CP="1F170";; #🅰🅱🅲
+    "20") CP="1F1E6";; #🇦🇧🇨
+    * ) help;exit 1;;
+  esac
+  if [ -p /dev/stdin ] ; then
+    changecode "$CP" "$(cat -)"
+  else
+    changecode "$CP" "$3$4$5$6$7$8$9"
+  fi
+  exit 0
+else
+  help
+fi
+
+exit 0
