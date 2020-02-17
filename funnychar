@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# 2020.2.16 funnychar ver 0.4
+# 2020.2.17 funnychar ver 0.5
 # kanata
 
 IFS='
@@ -83,7 +83,7 @@ changecode(){
     done
   fi
 
-  for WORD in `echo "$2"|grep -o .`
+  for WORD in `fold -1 <<<"$2"`
   do
     if [ -z "${funnytable[$WORD]}" ]
     then
@@ -143,7 +143,6 @@ then
   if [ -p /dev/stdin ] ; then
     changecode "$CP" "$(cat -)"
   else
-    #changecode "$CP" "$3$4$5$6$7$8$9"
     GLOBIGNORE=*
     changecode "$CP"  "$3$4$5$6$7$8$9"
     unset GLOBIGNORE
