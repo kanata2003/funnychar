@@ -34,5 +34,4 @@ $ echo "aあBCdef"|./funnychar.sh -p 4 # パイプ経由でも実行可能
 # Special thanks
 
 [@jiro_saburomaru](https://twitter.com/jiro_saburomaru) # Report a bug
-
 [@qwertanus](https://twitter.com/qwertanus) # Report a bug
