@@ -13,6 +13,13 @@ help(){
   cat $0 |grep "^    \"[1-9]"|tr -d '"=;'|sed 's/CP/U+/g'
 }
 
+check_bash_version(){
+  [[ ${BASH_VERSION::1} < 4 ]] && {
+    echo 'You need to have bash v4 or above to use this tool.' >&2
+    exit 1
+  }
+}
+
 changecode(){
   declare -A funnytable
   funnytable[" "]=" "
@@ -94,6 +101,9 @@ changecode(){
   done
   echo
 }
+
+# If bash version is less than 4, exit.
+check_bash_version
 
 if echo "$@" |grep -e '^-h' -e '^--help' >/dev/null
 then

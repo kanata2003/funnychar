@@ -18,6 +18,8 @@ $ cp funnychar /usr/local/bin/funnychar
 
 ## Usage
 
+You need Bash version 4 or above to run `funnychar`.
+
 ```bash
 $ ./funnychar.sh -p 3 "abcABC def"
 𝑎𝑏𝑐𝐴𝐵𝐶 𝑑𝑒𝑓
