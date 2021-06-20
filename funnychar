@@ -1,165 +1,135 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# 2021.6.13 funnychar ver 0.6
-# kanata
+LANG=C.UTF-8
 
-IFS='
-'
+TABLE=(
+  FF21@ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ
+  1D400@𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳
+  1D434@𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧
+  1D468@𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛
+  1D49C@𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏
+  1D4D0@𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃
+  1D504@𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷
+  1D538@𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫
+  1D56C@𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟
+  1D5A0@𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓
+  1D5D4@𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇
+  1D608@𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻
+  1D63C@𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯
+  1D670@𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣
+  1F110@🄐🄑🄒🄓🄔🄕🄖🄗🄘🄙🄚🄛🄜🄝🄞🄟🄠🄡🄢🄣🄤🄥🄦🄧🄨🄩⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵
+  24B6@ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ
+  1F130@🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉abcdefghijklmnopqrstuvwxyz
+  1F150@🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩abcdefghijklmnopqrstuvwxyz
+  1F170@🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉abcdefghijklmnopqrstuvwxyz
+  1F1E6@🇦🇧🇨🇩🇪🇫🇬🇭🇮🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿abcdefghijklmnopqrstuvwxyz
+)
+TABLESIZE="${#TABLE[@]}"
+
+make_funny(){
+  local alp
+  if [ "${#1}" = 52 ]
+  then
+    alp="$(echo {A..Z} {a..z} | tr -d \ )"
+    sed "y/$alp/$1/"
+  else
+    help 1 ""
+  fi
+}
+
+get_u52(){
+  local ten c_range
+  if echo "$1" | grep -qP '^U\+[A-F0-9]+$'
+  then
+    :
+  else
+    help 1 "Arg -u($1) is invalid. ex) U+XXXX"
+  fi
+  ten="$(echo -n "$1" | sed 's/^U+/0x/' | xargs printf %d)"
+  c_range="${ten}..$((ten+51))"
+  echo -e "$(
+    eval echo '{'"${c_range}"'}' |
+    xargs printf %x\ | sed 's/ $//' | sed 's/^\| /\\U/g'
+  )"
+}
+
+get_p52(){
+  local t
+  if { echo -e "$1" | grep -qP '^\d+$' &&
+       [ 0 -lt "$1" ] && [ "$1" -le "$TABLESIZE" ];}
+  then
+    t="${TABLE[$1-1]}"
+    echo -n "${t//*@/}"
+  else
+    help 1 "Arg -p($1) is invalid. 1<=[-p arg]<=${TABLESIZE}"
+  fi
+}
 
 help(){
-  echo 'ex) echo abcABC|'$0' -u U+1D468'
-  echo 'ex) '$0' -p [pattern_number] abcABC'
-  echo "    pattern_number is .."
-  cat $0 |grep "^    \"[1-9]"|tr -d '"=;'|sed 's/CP/U+/g'
-}
-
-check_bash_version(){
-  [[ ${BASH_VERSION::1} < 4 ]] && {
-    echo 'You need to have bash v4 or above to use this tool.' >&2
-    exit 1
-  }
-}
-
-changecode(){
-  declare -A funnytable
-  funnytable[" "]=" "
-  CP="$1"
-
-  if [ "$CP" = "FF21" ] # Pattern 1
+  if { [ "$1" = 1 ] && [ -n "$2" ];}
   then
-    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
-    CP="FF41"
-    for WORD in `echo {a..z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
-  elif [ "$CP" = "1F110" ] # Pattern 15
-  then
-    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
-    CP="249C"
-    for WORD in `echo {a..z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
-  elif echo "$CP"|grep -e "1F130" -e "1F150" -e "1F170" -e "1F1E6" >/dev/null # Patten 17,18,19
-  then
-    for WORD in `echo {A..Z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
-  else
-    for WORD in `echo {A..Z} {a..z}|tr -d " "|grep -o .`
-    do
-      funnytable["$WORD"]=$(printf "&#x$CP;"|nkf --numchar-input)
-      if [ "$CP" = "1D455" ];then funnytable["$WORD"]=$(printf "&#x210E;"|nkf --numchar-input);fi # Pattern 3 [h]
-      if [ "$CP" = "1D49D" ];then funnytable["$WORD"]=$(printf "&#x212C;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A0" ];then funnytable["$WORD"]=$(printf "&#x2130;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A1" ];then funnytable["$WORD"]=$(printf "&#x2131;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A3" ];then funnytable["$WORD"]=$(printf "&#x210B;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A4" ];then funnytable["$WORD"]=$(printf "&#x2110;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A7" ];then funnytable["$WORD"]=$(printf "&#x2112;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4A8" ];then funnytable["$WORD"]=$(printf "&#x2133;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4AD" ];then funnytable["$WORD"]=$(printf "&#x211B;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4BA" ];then funnytable["$WORD"]=$(printf "&#x212F;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4BC" ];then funnytable["$WORD"]=$(printf "&#x210A;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D4C4" ];then funnytable["$WORD"]=$(printf "&#x2134;"|nkf --numchar-input);fi # Pattern 5
-      if [ "$CP" = "1D506" ];then funnytable["$WORD"]=$(printf "&#x212D;"|nkf --numchar-input);fi # Pattern 7
-      if [ "$CP" = "1D50B" ];then funnytable["$WORD"]=$(printf "&#x210C;"|nkf --numchar-input);fi # Pattern 7
-      if [ "$CP" = "1D50C" ];then funnytable["$WORD"]=$(printf "&#x2111;"|nkf --numchar-input);fi # Pattern 7
-      if [ "$CP" = "1D515" ];then funnytable["$WORD"]=$(printf "&#x211C;"|nkf --numchar-input);fi # Pattern 7
-      if [ "$CP" = "1D51D" ];then funnytable["$WORD"]=$(printf "&#x2128;"|nkf --numchar-input);fi # Pattern 7
-      if [ "$CP" = "1D53A" ];then funnytable["$WORD"]=$(printf "&#x2102;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D53F" ];then funnytable["$WORD"]=$(printf "&#x210D;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D545" ];then funnytable["$WORD"]=$(printf "&#x2115;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D547" ];then funnytable["$WORD"]=$(printf "&#x2119;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D548" ];then funnytable["$WORD"]=$(printf "&#x211A;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D549" ];then funnytable["$WORD"]=$(printf "&#x211D;"|nkf --numchar-input);fi # Pattern 8
-      if [ "$CP" = "1D551" ];then funnytable["$WORD"]=$(printf "&#x2124;"|nkf --numchar-input);fi # Pattern 8
-      CP=$(echo "obase=16;ibase=16; $CP+1"|bc)
-    done
+    echo "Error: $2">&2
   fi
-
-  for WORD in `fold -1 <<<"$2"`
+  echo "ex) echo abcABC|$0 -u U+1D468"
+  echo "ex) $0 -p [pattern_number] abcABC"
+  echo "    pattern_number is .."
+  local i c t
+  i=1
+  for t in ${TABLE[*]}
   do
-    if [ -z "${funnytable[$WORD]}" ]
+    c="$(echo "${t//*@/}" | tr -d '[:lower:]')"
+    p="${t//@*/}"
+    if [ "${#c}" = 52 ]
     then
-     echo -n $WORD
-    else
-      echo -n ${funnytable["$WORD"]}
+      echo "    $((i++))) $p #${c:0:3}${c:26:3}"
+    elif [ "${#c}" = 26 ]
+    then
+      echo "    $((i++))) $p #${c:0:3}"
     fi
   done
-  echo
+  exit "$1"
 }
 
-# If bash version is less than 4, exit.
-check_bash_version
+main(){
+  args=$(getopt -o u:p:h -- "$@")
+  eval "set -- $args"
 
-if echo "$@" |grep -e '^-h' -e '^--help' >/dev/null
-then
-  help
-  exit 0
-fi
+  local U P
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -u) U="$2"; shift 2 ;;
+      -p) P="$2"; shift 2 ;;
+      -h) help 0; break   ;;
+      --) shift ; break   ;;
+    esac
+  done
 
-if [ "$#" -lt 2 ]
-then
-  help
-  exit 0
-fi
-
-if echo "$1" |grep '^-u' >/dev/null
-then
-  if [ -p /dev/stdin ] ; then
-    changecode $(echo $2|tr -d 'U+') "$(cat -)"
-  else
-    changecode $(echo $2|tr -d 'U+') "$3$4$5$6$7$8$9"
+  if {
+       { [ -n "$U" ] && [ -n "$P" ];} ||
+       { [ -z "$U" ] && [ -z "$P" ];}
+     }
+  then
+    help 1 'Specify either -u or -p.'
   fi
-  exit 0
-elif echo "$1" |grep '^-p' >/dev/null
-then
-  case "$2" in
-    "1") CP="FF21";;  #ＡＢＣａｂｃ
-    "2") CP="1D400";; #𝐀𝐁𝐂𝐚𝐛𝐜
-    "3") CP="1D434";; #𝐴𝐵𝐶𝑎𝑏𝑐
-    "4") CP="1D468";; #𝑨𝑩𝑪𝒂𝒃𝒄
-    "5") CP="1D49C";; #𝒜ℬ𝒞𝒶𝒷𝒸
-    "6") CP="1D4D0";; #𝓐𝓑𝓒𝓪𝓫𝓬
-    "7") CP="1D504";; #𝔄𝔅ℭ𝔞𝔟𝔠
-    "8") CP="1D538";; #𝔸𝔹ℂ𝕒𝕓𝕔
-    "9") CP="1D56C";; #𝕬𝕭𝕮𝖆𝖇𝖈
-    "10") CP="1D5A0";; #𝖠𝖡𝖢𝖺𝖻𝖼
-    "11") CP="1D5D4";; #𝗔𝗕𝗖𝗮𝗯𝗰
-    "12") CP="1D608";; #𝘈𝘉𝘊𝘢𝘣𝘤
-    "13") CP="1D63C";; #𝘼𝘽𝘾𝙖𝙗𝙘
-    "14") CP="1D670";; #𝙰𝙱𝙲𝚊𝚋𝚌
-    "15") CP="1F110";; #🄐🄑🄒
-    "16") CP="24B6";;  #ⒶⒷⒸⓐⓑⓒ
-    "17") CP="1F130";; #🄰🄱🄲
-    "18") CP="1F150";; #🅐🅑🅒
-    "19") CP="1F170";; #🅰🅱🅲
-    "20") CP="1F1E6";; #🇦🇧🇨
-    * ) help;exit 1;;
-  esac
-  if [ -p /dev/stdin ] ; then
-    changecode "$CP" "$(cat -)"
-  else
-    GLOBIGNORE=*
-    changecode "$CP"  "$3$4$5$6$7$8$9"
-    unset GLOBIGNORE
-  fi
-  exit 0
-else
-  help
-fi
 
-exit 0
+  if [ -n "$U" ]
+  then
+    RULE="$(get_u52 "$U")"
+  elif [ -n "$P" ]
+  then
+    RULE="$(get_p52 "$P")"
+  fi
+
+  if [ -p /dev/stdin ]
+  then
+    make_funny "$RULE" < /dev/stdin
+  elif [ $# -ne 0 ]
+  then
+    echo "$@" | make_funny "$RULE"
+  else
+    make_funny "$RULE" < /dev/stdin
+  fi
+}
+
+main "$@"
+exit "$?"
