@@ -94,7 +94,7 @@ help(){
 }
 
 main(){
-  args=$(getopt -o u:p:h -- "$@")
+  args=$(getopt -o u:p:h -- "$@") || help 1 "Failed to parse args."
   eval "set -- $args"
 
   local U P
