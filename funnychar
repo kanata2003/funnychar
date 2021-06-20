@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# 2021.6.20 funnychar ver 0.7
+# kanata
+
 LANG=C.UTF-8
 
 TABLE=(
