@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 VERSION_INFO="\
-2021.6.27 funnychar ver 0.75
+2021.6.27 funnychar ver 0.8
 kanata"
 
 LANG=C.UTF-8
