@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 2021.6.20 funnychar ver 0.7
+# 2021.6.27 funnychar ver 0.75
 # kanata
 
 LANG=C.UTF-8
@@ -29,6 +29,9 @@ TABLE=(
 )
 TABLESIZE="${#TABLE[@]}"
 
+# String substitution
+# Specifications : A..Za..z is 52 characters, 52 replacement characters must be set in the argument.
+# 仕様: A..Za..zが52文字です。52文字の置換文字が引数で設定されている必要があります。
 make_funny(){
   local alp
   if [ "${#1}" = 52 ]
@@ -40,6 +43,7 @@ make_funny(){
   fi
 }
 
+# Set translation rule for -u option
 get_u52(){
   local ten c_range
   if echo "$1" | grep -qP '^U\+[A-F0-9]+$'
@@ -56,6 +60,7 @@ get_u52(){
   )"
 }
 
+# Set translation rule for -p option
 get_p52(){
   local t
   if { echo -e "$1" | grep -qP '^\d+$' &&
@@ -115,6 +120,7 @@ main(){
     help 1 'Specify either -u or -p.'
   fi
 
+  # Get translation rule
   if [ -n "$U" ]
   then
     RULE="$(get_u52 "$U")"
@@ -123,13 +129,23 @@ main(){
     RULE="$(get_p52 "$P")"
   fi
 
+  # bash version check
+  [[ ${BASH_VERSION::1} < 4 ]] && {
+    echo 'You need to have bash v4 or above to use this tool.' >&2
+    exit 1
+  }
+
+  # Translation
   if [ -p /dev/stdin ]
   then
+    # From pipe
     make_funny "$RULE" < /dev/stdin
   elif [ $# -ne 0 ]
   then
+    # From args
     echo "$@" | make_funny "$RULE"
   else
+    # From keyboard
     make_funny "$RULE" < /dev/stdin
   fi
 }
