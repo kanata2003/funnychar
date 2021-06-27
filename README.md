@@ -27,6 +27,14 @@ $ ./funnychar.sh -u U+1D63C "abcABC def" # 該当のAのコードポイントを
 𝙖𝙗𝙘𝘼𝘽𝘾 𝙙𝙚𝙛
 $ echo "aあBCdef"|./funnychar.sh -p 4 # パイプ経由でも実行可能
 𝒂あ𝑩𝑪𝒅𝒆𝒇
+$ ./funnychar -p 13 # REPLモード
+unko
+𝘶𝘯𝘬𝘰
+poop
+𝘱𝘰𝘰𝘱
+make fun of king unko
+𝘮𝘢𝘬𝘦 𝘧𝘶𝘯 𝘰𝘧 𝘬𝘪𝘯𝘨 𝘶𝘯𝘬𝘰
+[^D or ^C]
 ```
 
 # Author
@@ -40,3 +48,5 @@ $ echo "aあBCdef"|./funnychar.sh -p 4 # パイプ経由でも実行可能
 [@qwertanus](https://twitter.com/qwertanus) # Report a bug
 
 [makino](https://github.com/kino-ma) # Improve
+
+[@eggplants](https://twitter.com/egpl0) # Improve
