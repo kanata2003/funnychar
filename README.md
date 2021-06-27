@@ -27,7 +27,7 @@ $ ./funnychar.sh -u U+1D63C "abcABC def" # 該当のAのコードポイントを
 𝙖𝙗𝙘𝘼𝘽𝘾 𝙙𝙚𝙛
 $ echo "aあBCdef"|./funnychar.sh -p 4 # パイプ経由でも実行可能
 𝒂あ𝑩𝑪𝒅𝒆𝒇
-$ ./funnychar -p 13 # REPLモード
+$ ./funnychar -p 13 # REPLモード（対話的な実行）
 unko
 𝘶𝘯𝘬𝘰
 poop
