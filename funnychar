@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# 2021.6.27 funnychar ver 0.75
-# kanata
+VERSION_INFO="\
+2021.6.27 funnychar ver 0.75
+kanata"
 
 LANG=C.UTF-8
 
@@ -98,17 +99,24 @@ help(){
   exit "$1"
 }
 
+# Print version and exit
+version(){
+  echo "$VERSION_INFO"
+  exit 0
+}
+
 main(){
-  args=$(getopt -o u:p:h -- "$@") || help 1 "Failed to parse args."
+  args=$(getopt -o u:p:hv -- "$@") || help 1 "Failed to parse args."
   eval "set -- $args"
 
   local U P
   while [ $# -gt 0 ]; do
     case "$1" in
-      -u) U="$2"; shift 2 ;;
-      -p) P="$2"; shift 2 ;;
-      -h) help 0; break   ;;
-      --) shift ; break   ;;
+      -u) U="$2" ; shift 2 ;;
+      -p) P="$2" ; shift 2 ;;
+      -h) help 0 ; break   ;;
+      -v) version; break   ;;
+      --) shift  ; break   ;;
     esac
   done
 
