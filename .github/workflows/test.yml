@@ -18,6 +18,8 @@ jobs:
           git clone https://github.com/ueokande/bashvm $HOME/.bashvm
           source $HOME/.bashvm/bin/bashvm-init
           bashvm use --install ${{ matrix.bash-version }}
+          bash --version | head -1
+          echo ${BASH_VERSION}
       - name: Setup Bats
         run: |
           sudo apt install bats
