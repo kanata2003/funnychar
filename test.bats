@@ -1,19 +1,19 @@
 #!/usr/bin/env bats
 
-# @test "-p + arg 1" {
-#   run bash -c "funnychar -p 1 UNKO"
-#   [ "$output" = 'ＵＮＫＯ' ]
-# }
+@test "-p + arg 1" {
+  run bash -c "funnychar -p 1 UNKO"
+  [ "$output" = 'ＵＮＫＯ' ]
+}
 
-# @test "-p + arg 2" {
-#   run bash -c "funnychar -p 13 UNKO"
-#   [ "$output" = '𝙐𝙉𝙆𝙊' ]
-# }
+@test "-p + arg 2" {
+  run bash -c "funnychar -p 13 UNKO"
+  [ "$output" = '𝙐𝙉𝙆𝙊' ]
+}
 
-# @test "-u + arg" {
-#   run bash -c "funnychar -u U+1F1E6 UNKO"
-#   [ "$output" = '🇺🇳🇰🇴' ]
-# }
+@test "-u + arg" {
+  run bash -c "funnychar -u U+1F1E6 UNKO"
+  [ "$output" = '🇺🇳🇰🇴' ]
+}
 
 @test "-p + stdin 1" {
   run bash -c "echo UNKO|funnychar -p 1"

@@ -22,9 +22,11 @@ jobs:
       - name: Setup Bats
         run: |
           sudo apt install bats
+      - name: Setup faketty
+        uses: Yuri6037/Action-FakeTTY@v1.1
       - name: Install funnychar
         run: |
           sudo install -m 0755 funnychar /usr/local/bin/funnychar
       - name: Run tests
         run: |
-          chmod +x test.bats && ./test.bats
+          chmod +x test.bats && faketty bats test.bats
