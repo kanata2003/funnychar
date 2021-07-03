@@ -47,4 +47,4 @@ make fun of king unko
 
 [makino](https://github.com/kino-ma) # Improve
 
-[@eggplants](https://twitter.com/egpl0) # Improve
+[@eggplants](https://twitter.com/egpl0) # Improve,Adding some tests
