@@ -137,12 +137,6 @@ main(){
     RULE="$(get_p52 "$P")"
   fi
 
-  # bash version check
-  [[ ${BASH_VERSION::1} < 4 ]] && {
-    echo 'You need to have bash v4 or above to use this tool.' >&2
-    exit 1
-  }
-
   # Translation
   if [ -p /dev/stdin ]
   then
